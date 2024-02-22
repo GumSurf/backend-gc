@@ -2,7 +2,7 @@ import * as jwt from 'jsonwebtoken';
 import { Injectable } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 
-const secretKey = 'eyJhbGciOiJIUzI1NiJ9.eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJJc3N1ZXIiLCJVc2VybmFtZSI6IkphdmFJblVzZSIsImV4cCI6MTcwNzkzMjU3MSwiaWF0IjoxNzA3OTMyNTcxfQ.2gHByHKJOo07qS-NlZEEsjiIsBafkAbdfSr1Y0iRw3Q'; // Remplacez par votre propre clé secrète JWT
+const jwtSecret = process.env.JWT_SECRET;
 
 @Injectable()
 export class AuthService {
@@ -11,7 +11,7 @@ export class AuthService {
   async login(username: string, password: string): Promise<string | null> {
     const user = await this.userService.findByUsername(username);
     if (user && user.password === password) {
-      const token = jwt.sign({ username: user.username, userId: user.id }, secretKey);
+      const token = jwt.sign({ username: user.username, userId: user.id }, jwtSecret);
       console.log("Return token");
       return token;
     } else {
@@ -30,6 +30,16 @@ export class AuthService {
     }
     // Retournez null si l'utilisateur n'est pas trouvé ou si le mot de passe est incorrect
     console.log("l'utilisateur n'existe pas");
+    return null;
+  }
+
+  async generateJwtToken(username: string, password: string): Promise<string | null> {
+    const user = await this.userService.findByUsername(username);
+    if (user && user.password === password) {
+        console.log("jwtSecret = ", jwtSecret);
+      const token = jwt.sign({ username: user.username, userId: user.id }, jwtSecret);
+      return token;
+    }
     return null;
   }
 }
