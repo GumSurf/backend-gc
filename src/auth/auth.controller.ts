@@ -28,19 +28,18 @@ export class AuthController {
   @Post('login')
   async login(@Body() credentials: { username: string, password: string }) {
     try {
-      // Utilisez le service AuthService pour valider les informations d'identification de l'utilisateur
-      const user = await this.authService.validateUser(credentials.username, credentials.password);
-      if (user) {
-        // Si les informations d'identification sont valides, retournez l'utilisateur
-        console.log("User est bon");
-        return user;
+      // Utilisez le service AuthService pour générer le token JWT
+      const token = await this.authService.generateJwtToken(credentials.username, credentials.password);
+      if (token) {
+        // Si les informations d'identification sont valides, retournez le token JWT
+        return { token };
       } else {
         // Si les informations d'identification ne sont pas valides, retournez une erreur
         throw new Error('Invalid credentials');
       }
     } catch (error) {
-      // Gérez les erreurs lors de la validation des informations d'identification
+      // Gérez les erreurs lors de la génération du token JWT
       throw new Error('Failed to login');
     }
   }
-}
+}  
