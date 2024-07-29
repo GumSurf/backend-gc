@@ -3,26 +3,23 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthController } from './auth/auth.controller';
 import { UserService } from './user/user.service';
-import { AccountController } from './account/account.controller';
 import { AuthModule } from './auth/auth.module';
 import { AuthService } from './auth/auth.service';
 import { MongooseModule } from '@nestjs/mongoose';
-import { UserSchema } from './user/user.entity';
+import { UserSchema } from './user/user.schema';
 import { TryConnexion } from './try.connexion';
-import { TutorialController } from './tutorial/tutorial.controller';
-import { TutorialService } from './tutorial/tutorial.service';
-import { TutorialSchema } from './tutorial/tutorial.schema';
+import { TutorielModule } from './tutoriel/tutoriel.module';
 
 @Module({
     imports: [
         AuthModule,
-        MongooseModule.forRoot('mongodb+srv://GumSurf:Iledesein29@galaxy-code-cluster.yqoq4dv.mongodb.net'),
+        MongooseModule.forRoot('mongodb+srv://Gabriel:rPIFon2xhxJSN2th@galaxy-code-cluster.yqoq4dv.mongodb.net/?retryWrites=true&w=majority&appName=galaxy-code-cluster'),
         MongooseModule.forFeature([
             { name: 'User', schema: UserSchema },
-            { name: 'Tutorial', schema: TutorialSchema },
         ]),
+        TutorielModule,
     ],
-    controllers: [AppController, AuthController, AccountController, TutorialController],
-    providers: [AppService, AuthService, UserService, TryConnexion, TutorialService],
+    controllers: [AppController, AuthController],
+    providers: [AppService, AuthService, UserService, TryConnexion],
 })
 export class AppModule { }
