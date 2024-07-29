@@ -8,7 +8,8 @@ export class TryConnexion implements OnModuleInit {
 
   async onModuleInit() {
     try {
-      await this.connection.db; // Cette ligne testera la connexion
+      console.log('Tentative de connexion à MongoDB...');
+      await this.connection.db;
       console.log('Connexion à MongoDB réussie !');
     } catch (error) {
       console.error('Connexion à MongoDB échouée !', error);
