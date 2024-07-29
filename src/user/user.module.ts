@@ -2,7 +2,7 @@ import { Module, NestModule, MiddlewareConsumer, RequestMethod } from '@nestjs/c
 import { UserController } from './user.controller'; // Importez le UserController
 import { MongooseModule } from '@nestjs/mongoose';
 import { UserService } from './user.service';
-import { UserSchema } from './user.entity'; // Importez le schema User
+import { UserSchema } from './user.schema';
 import { AuthMiddleware } from '../auth/auth.middleware'; // Importez votre middleware d'authentification
 
 @Module({
