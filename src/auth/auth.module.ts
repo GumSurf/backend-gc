@@ -5,17 +5,18 @@ import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from './jwt.strategy';
 import { UserModule } from '../user/user.module';
+import { ConfirmEmailController } from './auth.controller';
 
 @Module({
   imports: [
     PassportModule,
     JwtModule.register({
       secret: process.env.JWT_SECRET,
-      signOptions: { expiresIn: '1h' }, // Durée de validité du token
+      signOptions: { expiresIn: '24h' }, // Durée de validité du token
     }),
     UserModule,
   ],
   providers: [AuthService, JwtStrategy],
-  controllers: [AuthController],
+  controllers: [AuthController, ConfirmEmailController],
 })
 export class AuthModule {}
