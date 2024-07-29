@@ -1,8 +1,9 @@
+// src/articles/articles.controller.ts
 import { Controller, Get, Post, Body, Param, Put, Delete } from '@nestjs/common';
 import { TutorielService } from './tutoriel.service';
 
 @Controller('api/tutoriels')
-export class TutorielController {
+export class ArticleController {
   constructor(private readonly tutorielsService: TutorielService) {}
 
   @Post()
@@ -12,7 +13,7 @@ export class TutorielController {
 
   @Get()
   async getTutoriels() {
-    return this.tutorielsService.getTutoriels();
+    return this.tutorielsService.getTutoriel();
   }
 
   @Get(':id')
@@ -21,8 +22,8 @@ export class TutorielController {
   }
 
   @Put(':id')
-  async updateTutoriel(@Param('id') id: string, @Body() updateTutorielDto: any) {
-    return this.tutorielsService.updateTutoriel(id, updateTutorielDto);
+  async updateTutoriel(@Param('id') id: string, @Body() updateArticleDto: any) {
+    return this.tutorielsService.updateTutoriel(id, updateArticleDto);
   }
 
   @Delete(':id')

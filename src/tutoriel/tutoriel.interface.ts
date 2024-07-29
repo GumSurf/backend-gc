@@ -1,4 +1,5 @@
-export interface Tutoriel {
+// article.interface.ts
+export interface Article {
     id: string;
     title: string;
     content: string;
