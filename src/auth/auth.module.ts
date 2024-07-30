@@ -12,7 +12,7 @@ import { ConfirmEmailController } from './auth.controller';
     PassportModule,
     JwtModule.register({
       secret: process.env.JWT_SECRET,
-      signOptions: { expiresIn: '24h' }, // Durée de validité du token
+      signOptions: { expiresIn: '1h' }, // Durée de validité du token
     }),
     UserModule,
   ],
