@@ -9,6 +9,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { UserSchema } from './user/user.schema';
 import { TryConnexion } from './try.connexion';
 import { TutorielModule } from './tutoriel/tutoriel.module';
+import { ApiModule } from './api/api.module';
 
 @Module({
     imports: [
@@ -18,6 +19,7 @@ import { TutorielModule } from './tutoriel/tutoriel.module';
             { name: 'User', schema: UserSchema },
         ]),
         TutorielModule,
+        ApiModule,
     ],
     controllers: [AppController, AuthController],
     providers: [AppService, AuthService, UserService, TryConnexion],
