@@ -6,14 +6,15 @@ dotenv.config();
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
+    const port = process.env.PORT || 4000;
 
     app.enableCors({
-        origin: ['https://gumsurf.github.io/', 'http://localhost:3000'],
+        origin: ['https://gumsurf.github.io', 'http://localhost:3000'],
         methods: ['GET', 'POST', 'PUT', 'DELETE'],
         allowedHeaders: ['Content-Type', 'Authorization'],
         credentials: true,
     });
 
-    await app.listen(process.env.PORT || 5678);
+    await app.listen(port);
 }
 bootstrap();
