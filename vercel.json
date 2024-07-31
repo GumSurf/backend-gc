@@ -2,11 +2,15 @@
     "version": 2,
     "builds": [
       {
-        "src": "backend/main.ts",
+        "src": "dist/main.js",
         "use": "@vercel/node"
       }
     ],
     "routes": [
-      { "src": "/(.*)", "dest": "backend-gc/src/main.ts" }
+      {
+        "src": "/(.*)",
+        "dest": "dist/main.js"
+      }
     ]
   }
+  
