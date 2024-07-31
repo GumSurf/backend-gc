@@ -7,6 +7,6 @@
       }
     ],
     "routes": [
-      { "src": "/(.*)", "dest": "backend/main.ts" }
+      { "src": "/(.*)", "dest": "backend-gc/src/main.ts" }
     ]
   }
