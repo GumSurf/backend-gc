@@ -10,7 +10,7 @@ async function bootstrap() {
 
     app.enableCors({
         origin: ['https://gumsurf.github.io', 'http://localhost:3000', 'https://galaxy-code-backend.vercel.app', 'https://galaxy-code-frontend.vercel.app'],
-        methods: ['GET', 'POST', 'PUT', 'DELETE'],
+        methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
         allowedHeaders: ['Content-Type', 'Authorization'],
         credentials: true,
     });
