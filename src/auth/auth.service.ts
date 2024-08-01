@@ -48,7 +48,6 @@ export class AuthService {
     async generateJwtToken(email: string, password: string): Promise<string | null> {
         const user = await this.userService.findByEmail(email);
         const isPasswordValid = await bcrypt.compare(password, user.password);
-        console.log("generateJwtToken = ", process.env.JWT_SECRET);
         if (isPasswordValid === true && user.emailConfirmed === true) {
             const token = jwt.sign({ email: user.email, userId: user.id }, process.env.JWT_SECRET);
             return token;
