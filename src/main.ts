@@ -8,7 +8,11 @@ async function bootstrap() {
     const app = await NestFactory.create(AppModule);
     const port = process.env.PORT || 4000;
 
-    app.enableCors();
+    app.enableCors({
+        origin: ['http://localhost:3000', 'https://galaxy-code-frontend.vercel.app/'],
+        methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+        credentials: true, // Inclure les cookies si nécessaire
+    });
 
     await app.listen(port);
 }
