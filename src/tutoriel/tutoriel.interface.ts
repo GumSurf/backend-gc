@@ -1,10 +1,12 @@
-// article.interface.ts
-export interface Article {
-    id: string;
-    title: string;
-    content: string;
-    author: string;
-    createdAt: Date;
-    updatedAt: Date;
-  }
-  
+import { Document } from 'mongoose';
+import { Paragraph } from '../common/interfaces/paragraph.interface';
+import { Comment } from '../common/interfaces/comment.interface';
+
+export interface Tutoriel extends Document {
+  title: string;
+  content: Paragraph[];
+  author: string;
+  comments: Comment[];
+  createdAt: Date;
+  updatedAt: Date;
+}

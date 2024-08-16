@@ -1,31 +1,30 @@
-// src/articles/articles.service.ts
 import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Article } from './tutoriel.interface';
+import { BaseService } from '../common/service/base.service';
+import { Tutoriel } from './tutoriel.interface';
+import { InjectModel } from '@nestjs/mongoose';
 
 @Injectable()
-export class TutorielService {
-  constructor(@InjectModel('Article') private readonly tutorielModel: Model<Article>) {}
-
-  async createTutoriel(createTutorielDto: any): Promise<Article> {
-    const newArticle = new this.tutorielModel(createTutorielDto);
-    return await newArticle.save();
+export class TutorielService extends BaseService<Tutoriel> {
+  constructor(@InjectModel('Tutoriel') protected readonly model: Model<Tutoriel>) {
+    super(model);
   }
 
-  async getTutoriel(): Promise<Article[]> {
-    return await this.tutorielModel.find().exec();
-  }
+  async search(search: string): Promise<Tutoriel[]> {
+    console.log(`Searching for: ${search}`);
 
-  async getTutorielById(id: string): Promise<Article> {
-    return await this.tutorielModel.findById(id).exec();
-  }
+    try {
+      const results = await this.model.find({
+        title: { $regex: search, $options: 'i' }  // Recherche insensible à la casse
+      }).exec();
 
-  async updateTutoriel(id: string, updateTutorielDto: any): Promise<Article> {
-    return await this.tutorielModel.findByIdAndUpdate(id, updateTutorielDto, { new: true }).exec();
-  }
+      console.log(`Found ${results.length} results`);
+      console.log('Results:', results);
 
-  async deleteTutoriel(id: string): Promise<any> {
-    return await this.tutorielModel.findByIdAndDelete(id).exec();
+      return results;
+    } catch (error) {
+      console.error('Error during search:', error);
+      throw error;  // Rethrow the error to ensure it's properly handled upstream
+    }
   }
 }

@@ -1,33 +1,21 @@
-// src/articles/articles.controller.ts
-import { Controller, Get, Post, Body, Param, Put, Delete } from '@nestjs/common';
+import { Controller, Query, Get } from '@nestjs/common';
 import { TutorielService } from './tutoriel.service';
+import { Tutoriel } from './tutoriel.interface';
+import { BaseController } from '../common/controller/base.controller';
 
 @Controller('api/tutoriels')
-export class ArticleController {
-  constructor(private readonly tutorielsService: TutorielService) {}
-
-  @Post()
-  async createTutoriel(@Body() createTutorielDto: any) {
-    return this.tutorielsService.createTutoriel(createTutorielDto);
+export class TutorielController extends BaseController<Tutoriel> {
+  constructor(private readonly tutorielService: TutorielService) {
+    super(tutorielService);
   }
 
   @Get()
-  async getTutoriels() {
-    return this.tutorielsService.getTutoriel();
-  }
-
-  @Get(':id')
-  async getTutorielById(@Param('id') id: string) {
-    return this.tutorielsService.getTutorielById(id);
-  }
-
-  @Put(':id')
-  async updateTutoriel(@Param('id') id: string, @Body() updateArticleDto: any) {
-    return this.tutorielsService.updateTutoriel(id, updateArticleDto);
-  }
-
-  @Delete(':id')
-  async deleteTutoriel(@Param('id') id: string) {
-    return this.tutorielsService.deleteTutoriel(id);
+  async findAll(@Query('search') search?: string) {
+    console.log("search = ", search);
+    if (search) {
+      return this.tutorielService.search(search.toLowerCase());
+    }
+    // Si aucun terme de recherche n'est fourni, renvoie tous les tutoriels
+    return super.findAll();
   }
 }
